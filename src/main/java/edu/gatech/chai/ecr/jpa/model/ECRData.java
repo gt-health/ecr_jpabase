@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,8 +30,10 @@ import edu.gatech.chai.ecr.jpa.json.utils.ECRJsonConverter;
 @Table(name = "ecr_data", schema = "ecr")
 public class ECRData {
 	@Id
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="case_report_key_seq_gen")
+	@SequenceGenerator(name="case_report_key_seq_gen", sequenceName="case_report_key_seq", allocationSize=1)
 	@Column(name = "case_report_key")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(name = "case_data")
 	@Convert(converter = ECRJsonConverter.class)
