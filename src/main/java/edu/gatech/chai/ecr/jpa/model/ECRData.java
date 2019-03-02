@@ -30,12 +30,10 @@ import edu.gatech.chai.ecr.jpa.json.utils.ECRJsonConverter;
 @Table(name = "ecr_data", schema = "ecr")
 public class ECRData {
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="case_report_key_seq_gen")
-	@SequenceGenerator(name="case_report_key_seq_gen", sequenceName="case_report_key_seq", allocationSize=1)
 	@Column(name = "case_report_key")
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "case_data")
+	@Column(name = "case_data", length=4096)
 	@Convert(converter = ECRJsonConverter.class)
 	private ECR data;
 	@Column(name = "case_report_id")
@@ -78,7 +76,9 @@ public class ECRData {
 				firstName = patientName.getgiven();
 		}
 		zipCode = AddressUtil.findZip(ecr.getPatient().getstreetAddress());
-		diagnosisCode = ecr.getPatient().getDiagnosis().get(0).getCode();
+		if (ecr.getPatient().getDiagnosis() != null && ecr.getPatient().getDiagnosis().size() > 0) {
+			diagnosisCode = ecr.getPatient().getDiagnosis().get(0).getCode();
+		}
 		created_date = new Date();
 		last_updated = new Date();
 	}

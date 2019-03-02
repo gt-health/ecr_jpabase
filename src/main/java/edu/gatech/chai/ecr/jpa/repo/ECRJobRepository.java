@@ -10,4 +10,5 @@ import edu.gatech.chai.ecr.jpa.model.ECRJob;
 @Repository
 public interface ECRJobRepository extends JpaRepository<ECRJob, Integer>{
 	List<ECRJob> findByReportIdOrderByIdDesc(Integer reportId);
+	List<ECRJob> findByStatusCode(String statusCode);
 }

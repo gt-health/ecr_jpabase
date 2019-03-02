@@ -8,8 +8,8 @@ public class AddressUtil {
 	
 	public static String findZip(String input) {
 		Matcher matcher = zipPattern.matcher(input);
-		if(matcher.matches())
-			return matcher.toMatchResult().group(0);
+		if(matcher.find())
+			return matcher.group();
 		return "";
 	}
 }
