@@ -97,17 +97,41 @@ public class ECR {
 	}
 	
 	public void update(ECR newECR) {
-		Collections.sort(newECR.getProvider());
-		Collections.sort(this.provider);
-		for(int i=0;i<this.provider.size();i++) {
-			this.provider.get(i).update(newECR.getProvider().get(i));
-		}
-		this.facility.update(newECR.getFacility());
-		this.patient.update(newECR.getPatient());
-		for(String newNote : newECR.getNotes()) {
-			if(!this.notes.contains(newNote)) {
-				this.notes.add(newNote);
+		if(newECR != null) {
+			if(this.provider != null && newECR.getProvider() != null) {
+				Collections.sort(newECR.getProvider());
+				Collections.sort(this.provider);
+				for(int i=0;i<newECR.provider.size();i++) { //Whack-a-Mole sort for unordered and non-unique lists
+					Provider newECRProvider = newECR.getProvider().get(i);
+					if(this.provider.contains(newECR.getProvider().get(i))){
+						Provider oldECRProvider = null;
+						for(int j=0;j<this.provider.size();j++) {
+							oldECRProvider = this.provider.get(j);
+							if(oldECRProvider.equals(newECRProvider)) { 
+								oldECRProvider.update(newECRProvider);
+							}
+						}
+					}
+					else {
+						this.provider.add(newECRProvider);
+					}
+				}
 			}
+			
+			if(this.facility != null && newECR.getFacility() != null) {
+				this.facility.update(newECR.getFacility());
+			}
+			
+			if(this.patient != null && newECR.getPatient() != null) {
+				this.patient.update(newECR.getPatient());
+			}
+			
+			for(String newNote : newECR.getNotes()) {
+				if(!this.notes.contains(newNote)) {
+					this.notes.add(newNote);
+				}
+			}
+			
 		}
 	}
 
