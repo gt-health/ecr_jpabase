@@ -23,6 +23,7 @@ import edu.gatech.chai.ecr.jpa.json.Name;
 import edu.gatech.chai.ecr.jpa.json.ParentGuardian;
 import edu.gatech.chai.ecr.jpa.json.Patient;
 import edu.gatech.chai.ecr.jpa.json.Provider;
+import edu.gatech.chai.ecr.jpa.json.TypeableID;
 import edu.gatech.chai.ecr.jpa.json.utils.AddressUtil;
 import edu.gatech.chai.ecr.jpa.json.utils.ECRJsonConverter;
 
@@ -46,6 +47,8 @@ public class ECRData {
 	@Column(name = "last_updated")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date last_updated;
+	@Column(name = "patient_ids")
+	private String patientIds;
 	@Column(name = "last_name")
 	private String lastName;
 	@Column(name = "first_name")
@@ -68,16 +71,19 @@ public class ECRData {
 		data = ecr;
 		ecrId = id;
 		version = 1;
-		Name patientName = ecr.getPatient().getname();
+		Patient patient = ecr.getPatient();
+		List<TypeableID> patientIdList = patient.getid();
+		patientIds = ECRData.stringPatientIds(patientIdList);
+		Name patientName = patient.getname();
 		if(patientName != null) {
 			if(!patientName.getfamily().isEmpty())
 				lastName = patientName.getfamily();
 			if(!patientName.getgiven().isEmpty())
 				firstName = patientName.getgiven();
 		}
-		zipCode = AddressUtil.findZip(ecr.getPatient().getstreetAddress());
-		if (ecr.getPatient().getDiagnosis() != null && ecr.getPatient().getDiagnosis().size() > 0) {
-			diagnosisCode = ecr.getPatient().getDiagnosis().get(0).getCode();
+		zipCode = AddressUtil.findZip(patient.getstreetAddress());
+		if (patient.getDiagnosis() != null && patient.getDiagnosis().size() > 0) {
+			diagnosisCode = patient.getDiagnosis().get(0).getCode();
 		}
 		created_date = new Date();
 		last_updated = new Date();
@@ -87,6 +93,7 @@ public class ECRData {
 		data = oldData.getECR();
 		ecrId = oldData.getECRId();
 		version = oldData.getVersion();
+		patientIds = oldData.getPatientIds();
 		lastName = oldData.getLastName();
 		firstName = oldData.getFirstName();
 		zipCode = oldData.getZipCode();
@@ -143,6 +150,14 @@ public class ECRData {
 		this.last_updated = last_updated;
 	}
 	
+	public String getPatientIds() {
+		return patientIds;
+	}
+	
+	public void setPatientIds(String patientIds) {
+		this.patientIds = patientIds;
+	}
+		
 	public String getLastName() {
 		return lastName;
 	}
@@ -195,5 +210,55 @@ public class ECRData {
 		this.version = this.version + 1;
 		this.last_updated = new Date();
 		this.data.update(ecr);
+	}
+	
+	static public String stringPatientId(TypeableID patientId) {
+		return patientId.gettype()+"|"+patientId.getvalue();
+	}
+	
+	public TypeableID typeablePatientId(String patientId) {
+		if (patientId == null || patientId.isEmpty())
+			return null;
+		
+		String[] patientTypeableId = patientId.split("|");
+		if (patientTypeableId.length != 2) {
+			return null;
+		}
+		
+		TypeableID retVal = new TypeableID();
+		retVal.settype(patientTypeableId[0]);
+		retVal.setvalue(patientTypeableId[1]);
+		
+		return retVal;
+	}
+	
+	public List<TypeableID> typeablePatientIds() {
+		List<TypeableID> retVal = new ArrayList<TypeableID>();
+		if (patientIds == null || patientIds.isEmpty()) {
+			return retVal;
+		}
+		
+		String[] patientIdList = patientIds.split("\\^");
+		for (String patientId : patientIdList) {
+			TypeableID tPat = typeablePatientId(patientId);
+			if (tPat != null) {
+				retVal.add(tPat);
+			}
+		}
+		
+		return retVal;
+	}
+	
+	static public String stringPatientIds(List<TypeableID> patientIdList) {
+		String retVal = new String();
+		for (TypeableID patientId : patientIdList) {
+			if (retVal.isEmpty()) {
+				retVal = retVal.concat(ECRData.stringPatientId(patientId));
+			} else {
+				retVal = retVal.concat("^"+ECRData.stringPatientId(patientId));
+			}
+		}
+		
+		return retVal;
 	}
 }

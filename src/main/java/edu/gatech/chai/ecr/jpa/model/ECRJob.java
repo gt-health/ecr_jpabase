@@ -12,7 +12,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import edu.gatech.chai.ecr.jpa.json.ECR;
-import edu.gatech.chai.ecr.jpa.json.TypeableID;
 
 @Entity
 @Table(name = "ecr_job", schema = "ecr")
@@ -24,7 +23,7 @@ public class ECRJob {
 	@Column(name = "case_report_key")
 	private Integer reportId;
 	@Column(name = "patient_id")
-	private Integer patientId;
+	private String patientId;
 	@Column(name = "next_run_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date nextRunDate;
@@ -44,17 +43,22 @@ public class ECRJob {
 	public ECRJob() {
 	}
 
-	public ECRJob(ECR ecr) {
-		reportId = Integer.valueOf(ecr.getECRId());
-		for(TypeableID id: ecr.getPatient().getid()) {
-			try{
-				patientId = Integer.parseInt(id.getvalue());
-				break;
-			}
-			catch(NumberFormatException e) {
-				continue;
-			}
-		}
+	public ECRJob(ECRData ecrData) {
+		reportId = Integer.valueOf(ecrData.getId());
+		patientId = ECRData.stringPatientIds(ecrData.getECR().getPatient().getid());
+
+//		reportId = Integer.valueOf(ecr.getECRId());
+//		patientId = ECRData.stringPatientIds(ecr.getPatient().getid());
+		
+//		for(TypeableID id: ecr.getPatient().getid()) {
+//			try{
+//				patientId = Integer.parseInt(id.getvalue());
+//				break;
+//			}
+//			catch(NumberFormatException e) {
+//				continue;
+//			}
+//		}
 	}
 
 	public Integer getId() {
@@ -73,11 +77,11 @@ public class ECRJob {
 		this.reportId = reportId;
 	}
 
-	public Integer getPatientId() {
+	public String getPatientId() {
 		return patientId;
 	}
 
-	public void setPatientId(Integer patientId) {
+	public void setPatientId(String patientId) {
 		this.patientId = patientId;
 	}
 

@@ -26,4 +26,7 @@ public interface ECRDataRepository extends JpaRepository<ECRData, Integer> {
 	List<ECRData> findByLastNameAndZipCodeAndDiagnosisCodeOrderByVersionDesc(String lastName,String zipCode,String diagnosisCode,Pageable pageable);
 	List<ECRData> findByFirstNameAndZipCodeAndDiagnosisCodeOrderByVersionDesc(String firstName,String zipCode,String diagnosisCode,Pageable pageable);
 	List<ECRData> findByLastNameAndFirstNameAndZipCodeAndDiagnosisCodeOrderByVersionDesc(String lastName,String firstName,String zipCode,String diagnosisCode,Pageable pageable);
+	List<ECRData> findByPatientIdsContainingIgnoreCase(String stringPatientId);
+	ECRData	findTopByOrderByIdDesc();
+	ECRData findById(Integer keyId);
 }

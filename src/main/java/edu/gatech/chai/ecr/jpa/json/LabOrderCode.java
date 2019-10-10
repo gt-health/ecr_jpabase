@@ -6,6 +6,8 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class LabOrderCode extends CodeableConcept{
+	@JsonProperty("Date")
+	protected String date = "";
 	@JsonProperty("Laboratory_Results")
 	List<LabResult> laboratory_Results;
 	@JsonProperty("Facility")
@@ -16,6 +18,14 @@ public class LabOrderCode extends CodeableConcept{
 	public LabOrderCode() {
 		super();
 		laboratory_Results = new ArrayList<LabResult>();
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	public List<LabResult> getLaboratory_Results() {
