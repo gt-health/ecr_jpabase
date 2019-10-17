@@ -1,5 +1,6 @@
 package edu.gatech.chai.ecr.jpa.json;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Name implements Comparable<Name>{
@@ -86,6 +87,7 @@ public class Name implements Comparable<Name>{
 		return true;
 	}
 	
+	@JsonIgnore
 	public boolean isEmpty() {
 		if (given.isEmpty() && family.isEmpty()) {
 			return true;
