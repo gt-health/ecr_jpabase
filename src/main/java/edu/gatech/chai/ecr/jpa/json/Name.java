@@ -86,4 +86,12 @@ public class Name implements Comparable<Name>{
 		return true;
 	}
 	
+	public boolean isEmpty() {
+		if (given.isEmpty() && family.isEmpty()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }

@@ -1,12 +1,17 @@
 package edu.gatech.chai.ecr.jpa.controller;
 
-import java.util.regex.Pattern;
-
 import edu.gatech.chai.ecr.jpa.json.CodeableConcept;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ControllerUtils.
+ */
 public class ControllerUtils {
+	
+	/** The list concat string. */
 	public static String LIST_CONCAT_STRING = ", ";
 	
+	/** The Constant CT1D. */
 	public static final CodeableConcept[] CT1D = {
 			new CodeableConcept("SNOMED CT", "Chlamydia trachomatis infection (disorder)", "240589008"),
 			new CodeableConcept("SNOMED CT", "Acute genitourinary Chlamydia trachomatis infection (disorder)", "426247003"),
@@ -51,6 +56,8 @@ public class ControllerUtils {
 			new CodeableConcept("ICD10CM", "Congenital pneumonia due to Chlamydia", "P23.1"),
 			new CodeableConcept("ICD10CM", "Chlamydial pneumonia", "J16.0"),
 	};
+	
+	/** The Constant CT1R. */
 	public static final CodeableConcept[] CT1R = {
 			new CodeableConcept("SNOMED CT", "Chlamydia trachomatis (organism)", "63938009"),
 			new CodeableConcept("SNOMED CT", "Chlamydia trachomatis, serotype A (organism)", "115289001"),
@@ -79,6 +86,8 @@ public class ControllerUtils {
 			new CodeableConcept("SNOMED CT", "Chlamydia trachomatis K antigen (substance)", "121017006")
 			
 	};
+	
+	/** The Constant CT2L. */
 	public static final CodeableConcept[] CT2L = {
 			new CodeableConcept("LOINC", "Chlamydia trachomatis [Presence] in Vaginal fluid by Organism specific culture", "14464-2"),
 			new CodeableConcept("LOINC", "Chlamydia trachomatis Ag [Presence] in Vaginal fluid by Immunofluorescence", "14510-2"),
@@ -179,6 +188,7 @@ public class ControllerUtils {
 			new CodeableConcept("LOINC", "Chlamydia trachomatis DNA [Presence] in Genital specimen by Probe and target amplification method", "6356-0"),
 	};
 	
+	/** The Constant CT2R. */
 	public static final CodeableConcept[] CT2R = {
 			new CodeableConcept("SNOMED CT", "Yes (qualifier value)", "373066001"),
 			new CodeableConcept("SNOMED CT", "Present ++ out of ++++ (qualifier value)", "260348001"),
@@ -200,6 +210,7 @@ public class ControllerUtils {
 			new CodeableConcept("SNOMED CT", "Presence of infection (qualifier value)", "260976002"),
 	};
 	
+	/** The Constant GC1D. */
 	public static final CodeableConcept[] GC1D = {
 			new CodeableConcept("SNOMED CT", "Gonorrhea (disorder)", "15628003"),
 			new CodeableConcept("SNOMED CT", "Abscess gonococcal (disorder)", "235861001"),
@@ -333,6 +344,7 @@ public class ControllerUtils {
 			new CodeableConcept("ICD10CM", "Gonorrhea complicating the puerperium", "O98.23"),
 	};
 	
+	/** The Constant GC1R. */
 	public static final CodeableConcept[] GC1R = {
 			new CodeableConcept("SNOMED CT", "Neisseria gonorrhoeae (organism)", "68704007"),
 			new CodeableConcept("SNOMED CT", "Neisseria gonorrhoeae, beta lactamase negative (organism)", "414809001"),
@@ -347,6 +359,7 @@ public class ControllerUtils {
 			new CodeableConcept("SNOMED CT", "Neisseria gonorrhoeae antigen (substance)", "120977006")
 	};
 	
+	/** The Constant GC2L. */
 	public static final CodeableConcept[] GC2L = {
 			new CodeableConcept("LOINC", "Neisseria gonorrhoeae [Presence] in Cervix by Organism specific culture", "688-2"),
 			new CodeableConcept("LOINC", "Neisseria gonorrhoeae [Presence] in Genital specimen by Organism specific culture", "691-6"),
@@ -391,6 +404,8 @@ public class ControllerUtils {
 			new CodeableConcept("LOINC", "Neisseria gonorrhoeae rRNA [Presence] in Cervix by Probe and target amplification method", "50388-8"),
 			new CodeableConcept("LOINC", "Neisseria gonorrhoeae rRNA [Presence] in Unspecified specimen from donor by Probe and target amplification method", "50412-6"),
 	};
+	
+	/** The Constant STIMed. */
 	public static final CodeableConcept[] STIMed = {
 			new CodeableConcept("RxNorm", "Doxycycline Monohydrate 100 MG Oral Capsule Clinical Drug", "1649990"),
 			new CodeableConcept("RxNorm", "doxycycline hyclate 100 MG Oral Capsule Clinical Drug", "1649988"),
@@ -544,9 +559,18 @@ public class ControllerUtils {
 			new CodeableConcept("RxNorm", "30 ML Levofloxacin 25 MG/ML Injection", "1665519")
 	};
 	
+	/** The all codes. */
 	public static CodeableConcept[][] allCodes = {CT1D,CT1R,CT2L,CT2R,GC1D,GC1R,GC2L};
+	
+	/** The diagnosis codes. */
 	public static CodeableConcept[][] diagnosisCodes = {CT1D,GC1D};
 	
+	/**
+	 * Checks if is STI code.
+	 *
+	 * @param code the code
+	 * @return true, if is STI code
+	 */
 	public static boolean isSTICode(CodeableConcept code) {
 		String sys = code.getsystem();
 		if ( "LN".equals(sys) ) {
@@ -565,6 +589,12 @@ public class ControllerUtils {
 		return false;
 	}
 	
+	/**
+	 * Checks if is STI diagnosis code.
+	 *
+	 * @param code the code
+	 * @return true, if is STI diagnosis code
+	 */
 	public static boolean isSTIDiagnosisCode(CodeableConcept code) {
 		String sys = code.getsystem();
 		if ( "LN".equals(sys) ) {
@@ -583,6 +613,12 @@ public class ControllerUtils {
 		return false;
 	}
 	
+	/**
+	 * Checks if is STI med.
+	 *
+	 * @param code the code
+	 * @return true, if is STI med
+	 */
 	public static boolean isSTIMed(CodeableConcept code) {
 		for(CodeableConcept possibleCode : STIMed) {
 			if(code.getcode().equals(possibleCode.getcode()) && code.getsystem().equals(possibleCode.getsystem()) ) {

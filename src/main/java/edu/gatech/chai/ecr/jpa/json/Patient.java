@@ -297,7 +297,7 @@ public class Patient {
 	}
 	
 	public void update(Patient newPatient) {
-		if(newPatient.getname() != null && (this.name == null || !newPatient.getname().equals(this.name))) {
+		if(newPatient.getname() != null && !newPatient.getname().isEmpty() && (this.name == null || !newPatient.getname().equals(this.name))) {
 			this.name = newPatient.getname();
 		}
 		
