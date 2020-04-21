@@ -137,6 +137,10 @@ public class ECRJob {
 		statusCode = "R";
 	}
 
+	public void startPeriodic() {
+		statusCode = "P";
+	}
+
 	public void finishRun() {
 		updateCount++;
 		if (updateCount >= maxUpdates) {

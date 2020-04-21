@@ -5,7 +5,7 @@
 
 	<groupId>edu.gatech.chai</groupId>
 	<artifactId>ecr-jpabase</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 
 	<name>ecr-jpabase</name>
 	<url>http://maven.apache.org</url>

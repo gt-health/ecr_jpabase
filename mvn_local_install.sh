@@ -1,1 +1,1 @@
-mvn deploy:deploy-file -DgroupId=edu.gatech.chai -DartifactId=ecr-jpabase -Dversion=0.0.2 -Durl=file:../ecr_manager/local-maven-repo/ -DrepositoryId=local-maven-repo -DupdateReleaseInfo=true -Dfile=/Users/mc142/Documents/workspace/ECR/ecr_jpabase/target/ecr-jpabase-0.0.2.jar
+mvn deploy:deploy-file -DgroupId=edu.gatech.chai -DartifactId=ecr-jpabase -Dversion=0.0.3 -Durl=file:../ecr_manager/local-maven-repo/ -DrepositoryId=local-maven-repo -DupdateReleaseInfo=true -Dfile=/Users/mc142/Documents/workspace/ECR/ecr_jpabase/target/ecr-jpabase-0.0.3.jar
